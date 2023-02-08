@@ -20,7 +20,14 @@ No requirements.
 
 ## Inputs
 
-No inputs.
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_location"></a> [location](#input\_location) | The region of a resource. | `string` | n/a | yes |
+| <a name="input_network_security_group_data"></a> [network\_security\_group\_data](#input\_network\_security\_group\_data) | complete data from Network Security Group of the vnet. azurerm\_network\_security\_group.nsg | `any` | n/a | yes |
+| <a name="input_rg_connectivity_name"></a> [rg\_connectivity\_name](#input\_rg\_connectivity\_name) | Resource Group name where Azure Bastion Subnet is located | `string` | n/a | yes |
+| <a name="input_rg_management_name"></a> [rg\_management\_name](#input\_rg\_management\_name) | Resource Group name where Azure Bastion Service will be deployed to | `string` | n/a | yes |
+| <a name="input_state"></a> [state](#input\_state) | The environment of the resource. (prd,dev,tst,int) | `string` | n/a | yes |
+| <a name="input_subnet_data"></a> [subnet\_data](#input\_subnet\_data) | Complete data from AzureBastionSubnet Subnet Terraform Ressorce in Vnet. Azurerm\_subnet.subnet | `any` | n/a | yes |
 ## Outputs
 
 No outputs.
