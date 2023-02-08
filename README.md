@@ -76,7 +76,11 @@ No requirements.
 | <a name="input_subnet_data"></a> [subnet\_data](#input\_subnet\_data) | Complete data from AzureBastionSubnet Subnet Terraform Ressorce in Vnet. Azurerm\_subnet.subnet | `any` | n/a | yes |
 ## Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| <a name="output_azure_bastion"></a> [azure\_bastion](#output\_azure\_bastion) | n/a |
+| <a name="output_public_ip"></a> [public\_ip](#output\_public\_ip) | n/a |
+| <a name="output_subnet_nsg_association"></a> [subnet\_nsg\_association](#output\_subnet\_nsg\_association) | n/a |
 
 ## Resource types
 
