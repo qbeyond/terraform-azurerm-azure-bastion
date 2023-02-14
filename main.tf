@@ -110,7 +110,7 @@ resource "azurerm_network_security_rule" "landing_zone_nsg_rule_bastion_2001" {
   priority                    = 2030
   direction                   = "Outbound"
   access                      = "Allow"
-  protocol                    = "tcp"
+  protocol                    = "Tcp"
   source_port_range           = "*"
   destination_port_ranges     = ["443"]
   source_address_prefix       = "*"
