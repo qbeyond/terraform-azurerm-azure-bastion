@@ -20,3 +20,7 @@ variable "subnet_data" {
 variable "network_security_group_data" {
   description = "complete data from Network Security Group of the vnet. azurerm_network_security_group.nsg"
 }
+variable "sku" {
+  description = "Bastion Tiers. (Basic, Standard)"
+  type        = string
+}

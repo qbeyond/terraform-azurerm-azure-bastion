@@ -2,6 +2,7 @@ resource "azurerm_bastion_host" "landing_zone_bastion_service" {
   name                = "bn-${var.subnet_data.virtual_network_name}"
   location            = var.location
   resource_group_name = var.rg_management_name
+  sku                 = var.sku
 
   ip_configuration {
     name                 = "configuration"
