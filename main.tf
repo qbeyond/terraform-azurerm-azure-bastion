@@ -76,11 +76,7 @@ resource "azurerm_network_security_rule" "landing_zone_nsg_rule_bastion_0001" {
   source_address_prefix       = "Internet"
   destination_address_prefix  = "*"
   resource_group_name         = var.rg_connectivity_name
-  network_security_group_name = var.bastion_nsg_name
-
-  depends_on = [
-    azurerm_network_security_group.Bastion
-  ]
+  network_security_group_name = azurerm_network_security_group.Bastion.name
 
 }
 resource "azurerm_network_security_rule" "landing_zone_nsg_rule_bastion_0002" {
@@ -94,11 +90,7 @@ resource "azurerm_network_security_rule" "landing_zone_nsg_rule_bastion_0002" {
   source_address_prefix       = "GatewayManager"
   destination_address_prefix  = "*"
   resource_group_name         = var.rg_connectivity_name
-  network_security_group_name = var.bastion_nsg_name
-
-  depends_on = [
-    azurerm_network_security_group.Bastion
-  ]
+  network_security_group_name = azurerm_network_security_group.Bastion.name
 
 }
 resource "azurerm_network_security_rule" "landing_zone_nsg_rule_bastion_0003" {
@@ -112,11 +104,7 @@ resource "azurerm_network_security_rule" "landing_zone_nsg_rule_bastion_0003" {
   source_address_prefix       = "AzureLoadBalancer"
   destination_address_prefix  = "*"
   resource_group_name         = var.rg_connectivity_name
-  network_security_group_name = var.bastion_nsg_name
-
-  depends_on = [
-    azurerm_network_security_group.Bastion
-  ]
+  network_security_group_name = azurerm_network_security_group.Bastion.name
 
 }
 resource "azurerm_network_security_rule" "landing_zone_nsg_rule_bastion_0004" {
@@ -130,11 +118,7 @@ resource "azurerm_network_security_rule" "landing_zone_nsg_rule_bastion_0004" {
   source_address_prefix       = "VirtualNetwork"
   destination_address_prefix  = "VirtualNetwork"
   resource_group_name         = var.rg_connectivity_name
-  network_security_group_name = var.bastion_nsg_name
-
-  depends_on = [
-    azurerm_network_security_group.Bastion
-  ]
+  network_security_group_name = azurerm_network_security_group.Bastion.name
 
 }
 #### Outbound Rules #####
@@ -149,11 +133,7 @@ resource "azurerm_network_security_rule" "landing_zone_nsg_rule_bastion_2000" {
   source_address_prefix       = "*"
   destination_address_prefix  = "VirtualNetwork"
   resource_group_name         = var.rg_connectivity_name
-  network_security_group_name = var.bastion_nsg_name
-
-  depends_on = [
-    azurerm_network_security_group.Bastion
-  ]
+  network_security_group_name = azurerm_network_security_group.Bastion.name
 
 }
 resource "azurerm_network_security_rule" "landing_zone_nsg_rule_bastion_2001" {
@@ -167,11 +147,7 @@ resource "azurerm_network_security_rule" "landing_zone_nsg_rule_bastion_2001" {
   source_address_prefix       = "*"
   destination_address_prefix  = "AzureCloud"
   resource_group_name         = var.rg_connectivity_name
-  network_security_group_name = var.bastion_nsg_name
-
-  depends_on = [
-    azurerm_network_security_group.Bastion
-  ]
+  network_security_group_name = azurerm_network_security_group.Bastion.name
 
 }
 resource "azurerm_network_security_rule" "landing_zone_nsg_rule_bastion_2002" {
@@ -185,11 +161,7 @@ resource "azurerm_network_security_rule" "landing_zone_nsg_rule_bastion_2002" {
   source_address_prefix       = "VirtualNetwork"
   destination_address_prefix  = "VirtualNetwork"
   resource_group_name         = var.rg_connectivity_name
-  network_security_group_name = var.bastion_nsg_name
-
-  depends_on = [
-    azurerm_network_security_group.Bastion
-  ]
+  network_security_group_name = azurerm_network_security_group.Bastion.name
 
 }
 resource "azurerm_network_security_rule" "landing_zone_nsg_rule_bastion_2003" {
@@ -203,11 +175,7 @@ resource "azurerm_network_security_rule" "landing_zone_nsg_rule_bastion_2003" {
   source_address_prefix       = "*"
   destination_address_prefix  = "Internet"
   resource_group_name         = var.rg_connectivity_name
-  network_security_group_name = var.bastion_nsg_name
-
-  depends_on = [
-    azurerm_network_security_group.Bastion
-  ]
+  network_security_group_name = azurerm_network_security_group.Bastion.name
 
 }
 
