@@ -15,8 +15,8 @@ provider "azurerm" {
   features {}
 }
 
-resource "azurerm_resource_group" "rg-connectivity-01" {
-  name     = "rg-connectivity-01"
+resource "azurerm_resource_group" "connectivity" {
+  name     = "rg-Connectivity-01"
   location = "westeurope"
 }
 
@@ -28,30 +28,19 @@ resource "azurerm_resource_group" "bastion" {
 resource "azurerm_virtual_network" "example" {
   name                = "examplevnet"
   address_space       = ["192.168.33.0/24"]
-  location            = azurerm_resource_group.rg-connectivity-01.location
-  resource_group_name = azurerm_resource_group.rg-connectivity-01.name
-  depends_on = [
-    azurerm_resource_group.rg-connectivity-01
-  ]
+  location            = azurerm_resource_group.connectivity.location
+  resource_group_name = azurerm_resource_group.connectivity.name
 }
 
 module "azureBastion" {
   source                      = "../../"
   location                    = "westeurope"
   state                       = "dev"
-  rg_connectivity_name        = "rg-connectivity-01"
+  rg_connectivity_name        = azurerm_resource_group.connectivity.name
   rg_bastion_name             = azurerm_resource_group.bastion.name
   bastion_vnet_name           = azurerm_virtual_network.example.name
-  bastion_subnet_address      = ["192.168.33.192/26"]
-  bastion_nsg_name            = "Bastion_NSG"
+  bastion_subnet_address      = "192.168.33.192/26"
   sku                         = "Standard"
-  
-  depends_on = [
-    azurerm_resource_group.rg-connectivity-01,
-    azurerm_resource_group.bastion,
-    azurerm_virtual_network.example
-  ]
-
 }
 ```
 
@@ -63,8 +52,7 @@ No requirements.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_bastion_nsg_name"></a> [bastion\_nsg\_name](#input\_bastion\_nsg\_name) | Azure Bastion Network Security Group Name | `string` | n/a | yes |
-| <a name="input_bastion_subnet_address"></a> [bastion\_subnet\_address](#input\_bastion\_subnet\_address) | Azure Bastion Subnet address | `any` | n/a | yes |
+| <a name="input_bastion_subnet_address"></a> [bastion\_subnet\_address](#input\_bastion\_subnet\_address) | Azure Bastion Subnet address | `string` | n/a | yes |
 | <a name="input_bastion_vnet_name"></a> [bastion\_vnet\_name](#input\_bastion\_vnet\_name) | Azure Bastion VNET name | `string` | n/a | yes |
 | <a name="input_location"></a> [location](#input\_location) | The region of a resource. | `string` | n/a | yes |
 | <a name="input_rg_bastion_name"></a> [rg\_bastion\_name](#input\_rg\_bastion\_name) | Azure Bastion Resource Group Name | `string` | n/a | yes |
@@ -85,7 +73,6 @@ No requirements.
 |------|-------|
 | [azurerm_bastion_host](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/bastion_host) | 1 |
 | [azurerm_network_security_group](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_security_group) | 1 |
-| [azurerm_network_security_rule](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_security_rule) | 8 |
 | [azurerm_public_ip](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/public_ip) | 1 |
 | [azurerm_subnet](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/subnet) | 1 |
 | [azurerm_subnet_network_security_group_association](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/subnet_network_security_group_association) | 1 |
@@ -103,18 +90,15 @@ No modules.
 | Name | Type |
 |------|------|
 | [azurerm_bastion_host.landing_zone_bastion_service](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/bastion_host) | resource |
-| [azurerm_network_security_group.Bastion](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_security_group) | resource |
-| [azurerm_network_security_rule.landing_zone_nsg_rule_bastion_0001](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_security_rule) | resource |
-| [azurerm_network_security_rule.landing_zone_nsg_rule_bastion_0002](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_security_rule) | resource |
-| [azurerm_network_security_rule.landing_zone_nsg_rule_bastion_0003](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_security_rule) | resource |
-| [azurerm_network_security_rule.landing_zone_nsg_rule_bastion_0004](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_security_rule) | resource |
-| [azurerm_network_security_rule.landing_zone_nsg_rule_bastion_2000](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_security_rule) | resource |
-| [azurerm_network_security_rule.landing_zone_nsg_rule_bastion_2001](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_security_rule) | resource |
-| [azurerm_network_security_rule.landing_zone_nsg_rule_bastion_2002](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_security_rule) | resource |
-| [azurerm_network_security_rule.landing_zone_nsg_rule_bastion_2003](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_security_rule) | resource |
 | [azurerm_public_ip.landing_zone_vnet_pip_bastion](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/public_ip) | resource |
-| [azurerm_subnet.AzureBastionSubnet](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/subnet) | resource |
+| [azurerm_subnet.bastion](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/subnet) | resource |
 | [azurerm_subnet_network_security_group_association.landing_zone_nsg_association_bastion](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/subnet_network_security_group_association) | resource |
+
+### rules.tf
+
+| Name | Type |
+|------|------|
+| [azurerm_network_security_group.bastion](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_security_group) | resource |
 <!-- END_TF_DOCS -->
 
 ## Contribute
