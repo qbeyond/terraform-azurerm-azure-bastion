@@ -1,8 +1,17 @@
 resource "azurerm_bastion_host" "landing_zone_bastion_service" {
-  name                = "bn-${azurerm_subnet.bastion.name}"
-  location            = var.location
-  resource_group_name = var.rg_bastion_name
-  sku                 = var.sku
+  name                   = "bn-${var.bastion_vnet_name}"
+  location               = var.location
+  resource_group_name    = var.rg_bastion_name
+  sku                    = var.sku
+  ### Optional options ###
+  copy_paste_enabled     = var.copy_paste_enabled
+  # Standard ONLY options
+  scale_units            = var.sku == "Standard" ? var.scale_units : null
+  ip_connect_enabled     = var.sku == "Standard" ? var.ip_connect_enabled : null
+  file_copy_enabled      = var.sku == "Standard" ? var.file_copy_enabled : null
+  tunneling_enabled      = var.sku == "Standard" ? var.tunneling_enabled : null
+  shareable_link_enabled = var.sku == "Standard" ? var.shareable_link_enabled : null
+
 
   ip_configuration {
     name                 = "configuration"

@@ -1,10 +1,10 @@
-# Module
-[![GitHub tag](https://img.shields.io/github/tag/qbeyond/terraform-module-template.svg)](https://registry.terraform.io/modules/qbeyond/terraform-module-template/provider/latest)
-[![License](https://img.shields.io/github/license/qbeyond/terraform-module-template.svg)](https://github.com/qbeyond/terraform-module-template/blob/main/LICENSE)
+# Azure Bastion
+[![GitHub tag](https://img.shields.io/github/tag/qbeyond/terraform-azurerm-azure-bastion.svg)](https://registry.terraform.io/modules/qbeyond/azure-bastion/azurerm/latest)
+[![License](https://img.shields.io/github/license/qbeyond/terraform-azurerm-azure-bastion.svg)](https://github.com/qbeyond/terraform-azurerm-azure-bastion/blob/main/LICENSE)
 
 ----
 
-This is a template module. It just showcases how a module should look. This would be a short description of the module.
+This module creates an Azure Bastion with all its possible options and also creates by itself the NSG and Subnets that would need.
 
 <!-- BEGIN_TF_DOCS -->
 ## Usage
@@ -40,7 +40,9 @@ module "azureBastion" {
   rg_bastion_name             = azurerm_resource_group.bastion.name
   bastion_vnet_name           = azurerm_virtual_network.example.name
   bastion_subnet_address      = "192.168.33.192/26"
-  sku                         = "Standard"
+  sku                         = "Basic"
+  # Following variables are optional
+  copy_paste_enabled          = true
 }
 ```
 
@@ -52,13 +54,19 @@ No requirements.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_bastion_subnet_address"></a> [bastion\_subnet\_address](#input\_bastion\_subnet\_address) | Azure Bastion Subnet address | `string` | n/a | yes |
+| <a name="input_bastion_subnet_address"></a> [bastion\_subnet\_address](#input\_bastion\_subnet\_address) | Azure Bastion Subnet address, minimum possible address is /26 | `string` | n/a | yes |
 | <a name="input_bastion_vnet_name"></a> [bastion\_vnet\_name](#input\_bastion\_vnet\_name) | Azure Bastion VNET name | `string` | n/a | yes |
 | <a name="input_location"></a> [location](#input\_location) | The region of a resource. | `string` | n/a | yes |
 | <a name="input_rg_bastion_name"></a> [rg\_bastion\_name](#input\_rg\_bastion\_name) | Azure Bastion Resource Group Name | `string` | n/a | yes |
-| <a name="input_rg_connectivity_name"></a> [rg\_connectivity\_name](#input\_rg\_connectivity\_name) | Resource Group name where Azure Bastion Subnet is located | `string` | n/a | yes |
+| <a name="input_rg_connectivity_name"></a> [rg\_connectivity\_name](#input\_rg\_connectivity\_name) | Resource Group name where Azure Bastion VNet and Subnet are located | `string` | n/a | yes |
 | <a name="input_state"></a> [state](#input\_state) | The environment of the resource. (prd,dev,tst,int) | `string` | n/a | yes |
+| <a name="input_copy_paste_enabled"></a> [copy\_paste\_enabled](#input\_copy\_paste\_enabled) | Enable clipboard copy-paste in Azure Bastion | `bool` | `null` | no |
+| <a name="input_file_copy_enabled"></a> [file\_copy\_enabled](#input\_file\_copy\_enabled) | Allows you to transfer files via Azure Bastion, only available in the Standard tier | `bool` | `null` | no |
+| <a name="input_ip_connect_enabled"></a> [ip\_connect\_enabled](#input\_ip\_connect\_enabled) | Azure Bastion connectivity via IP, only available in the Standard tier | `bool` | `true` | no |
+| <a name="input_scale_units"></a> [scale\_units](#input\_scale\_units) | Allows scale the number of 'backend instances/VMs' between 2-50 (default 2), <each unit/instance/VM allows 20 sessions>, by default is 2 (40 sessions) on Basic and Standard tier, but it can only be modified in the Standard tier | `number` | `null` | no |
+| <a name="input_shareable_link_enabled"></a> [shareable\_link\_enabled](#input\_shareable\_link\_enabled) | Option in PREVIEW!!! Allow users connect to a target resource using Azure Bastion without accessing the Azure portal, only available in the Standard tier | `bool` | `null` | no |
 | <a name="input_sku"></a> [sku](#input\_sku) | Bastion Tiers. (Basic, Standard) | `string` | `"Basic"` | no |
+| <a name="input_tunneling_enabled"></a> [tunneling\_enabled](#input\_tunneling\_enabled) | The 'native client feature' <Name in Azure Portal, in Terraform is 'tunneling\_enabled'> lets you connect to your target VMs via Bastion using Azure CLI, only available in the Standard tier | `bool` | `null` | no |
 ## Outputs
 
 | Name | Description |

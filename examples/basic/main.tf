@@ -27,5 +27,7 @@ module "azureBastion" {
   rg_bastion_name             = azurerm_resource_group.bastion.name
   bastion_vnet_name           = azurerm_virtual_network.example.name
   bastion_subnet_address      = "192.168.33.192/26"
-  sku                         = "Standard"
+  sku                         = "Basic"
+  # Following variables are optional
+  copy_paste_enabled          = true
 }
