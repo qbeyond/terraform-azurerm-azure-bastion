@@ -35,4 +35,7 @@ module "azureBastion" {
   file_copy_enabled           = true
   tunneling_enabled           = false
   shareable_link_enabled      = false
+  tags                        = {
+    "env" = "PRD"
+  }
 }

@@ -11,7 +11,7 @@ resource "azurerm_bastion_host" "landing_zone_bastion_service" {
   file_copy_enabled      = var.sku == "Standard" ? var.file_copy_enabled : null
   tunneling_enabled      = var.sku == "Standard" ? var.tunneling_enabled : null
   shareable_link_enabled = var.sku == "Standard" ? var.shareable_link_enabled : null
-
+  tags                   = var.tags
 
   ip_configuration {
     name                 = "configuration"
@@ -26,6 +26,7 @@ resource "azurerm_public_ip" "landing_zone_vnet_pip_bastion" {
   location            = var.location
   allocation_method   = "Static"
   sku                 = "Standard"
+  tags                = var.tags
 }
 
 # Azure Bastion Subnet
