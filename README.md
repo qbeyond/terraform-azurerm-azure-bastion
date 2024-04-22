@@ -69,7 +69,7 @@ No requirements.
 | <a name="input_scale_units"></a> [scale\_units](#input\_scale\_units) | Allows scale the number of 'backend instances/VMs' between 2-50 (default 2), <each unit/instance/VM allows 20 sessions>, by default is 2 (40 sessions) on Basic and Standard tier, but it can only be modified in the Standard tier | `number` | `null` | no |
 | <a name="input_shareable_link_enabled"></a> [shareable\_link\_enabled](#input\_shareable\_link\_enabled) | Option in PREVIEW!!! Allow users connect to a target resource using Azure Bastion without accessing the Azure portal, only available in the Standard tier | `bool` | `null` | no |
 | <a name="input_sku"></a> [sku](#input\_sku) | Bastion Tiers. (Basic, Standard) | `string` | `"Basic"` | no |
-| <a name="input_tags"></a> [tags](#input\_tags) | If specified, will set tags for all resources deployed by this module where supported. | `map(string)` | `{}` | no |
+| <a name="input_tags"></a> [tags](#input\_tags) | If specified, will set tags for all resources deployed by this module where supported. | `map(string)` | `null` | no |
 | <a name="input_tunneling_enabled"></a> [tunneling\_enabled](#input\_tunneling\_enabled) | The 'native client feature' <Name in Azure Portal, in Terraform is 'tunneling\_enabled'> lets you connect to your target VMs via Bastion using Azure CLI, only available in the Standard tier | `bool` | `null` | no |
 ## Outputs
 
