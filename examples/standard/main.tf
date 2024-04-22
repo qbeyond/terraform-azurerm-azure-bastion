@@ -36,6 +36,6 @@ module "azureBastion" {
   tunneling_enabled           = false
   shareable_link_enabled      = false
   tags                        = {
-    "env" = "PRD"
+    "tagname" = "tagvalue"
   }
 }

@@ -44,7 +44,7 @@ module "azureBastion" {
   # Following variables are optional
   copy_paste_enabled          = true
   tags                        = {
-    "env" = "PRD"
+    "tagname" = "tagvalue"
   }
 }
 ```
