@@ -3,6 +3,7 @@ resource "azurerm_network_security_group" "bastion" {
   name                = "nsg-${replace(replace(var.bastion_subnet_address, ".", "-"), "/", "-")}-Management-Bastion"
   location            = var.location
   resource_group_name = azurerm_subnet.bastion.resource_group_name
+  tags                = var.tags
   ### Rules # Mandatory Rules for Azure Bastion - DO NOT CHANGE!!!
   #### Inbound Rules #####
   #https://docs.microsoft.com/en-us/azure/bastion/bastion-nsg
