@@ -77,5 +77,5 @@ variable "shareable_link_enabled" {
 variable "tags" {
   type        = map(string)
   description = "If specified, will set tags for all resources deployed by this module where supported."
-  default     = {}
+  default     = null
 }
