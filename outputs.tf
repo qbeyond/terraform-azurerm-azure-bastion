@@ -3,7 +3,7 @@ output "azure_bastion" {
 }
 
 output "public_ip" {
-  value = azurerm_public_ip.bastion
+  value = var.create_pip ? azurerm_public_ip.bastion : null
 }
 
 output "subnet_nsg_association" {
