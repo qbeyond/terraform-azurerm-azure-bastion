@@ -20,6 +20,7 @@ resource "azurerm_bastion_host" "this" {
 }
 
 resource "azurerm_public_ip" "bastion" {
+  count               = var.create_pip ? 1 : 0
   name                = "pip-prd-Bastion-01-${local.default_location}"
   location            = local.default_location
   resource_group_name = var.rg_bastion_name

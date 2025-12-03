@@ -6,6 +6,20 @@ and this module adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.
  
 ## [Unreleased]
 
+## [2.0.1] - 2025-12-03
+
+Flag for creating a Public IP
+
+### Added
+
+Flag for creating a Public IP
+
+### Changed
+
+### Removed
+
+### Fixed
+
 ## [2.0.0] - 2025-12-03
 
 Up-to-date and new functionalities

@@ -74,3 +74,9 @@ variable "bastion_subnet_id" {
   type        = string
   default     = null
 }
+
+variable "create_pip" {
+  description = "Whether to create a new Public IP for the Azure Bastion Host. If true, a new Public IP will be created."
+  type        = bool
+  default     = true
+}
