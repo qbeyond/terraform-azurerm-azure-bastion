@@ -80,3 +80,138 @@ variable "create_pip" {
   type        = bool
   default     = true
 }
+
+variable "security_rules" {
+  description = "Each of the security rules assigned to the NSG."
+  type = map(object({
+
+    # (Optional) Description of the rule (up to 140 characters).
+    description                          = optional(string)
+
+    # (Required) Protocol: Tcp, Udp, Icmp, Esp, Ah or "*" (all).
+    protocol                             = string
+
+    # (Optional) Source port or port range. Required if source_port_ranges is not used.
+    source_port_range                    = optional(string)
+
+    # (Optional) List of source ports or port ranges. Required if source_port_range is not used.
+    source_port_ranges                   = optional(list(string))
+
+    # (Optional) Destination port or port range. Required if destination_port_ranges is not used.
+    destination_port_range               = optional(string)
+
+    # (Optional) List of destination ports or port ranges. Required if destination_port_range is not used.
+    destination_port_ranges              = optional(list(string))
+
+    # (Optional) Source address prefix (CIDR or tag: VirtualNetwork, AzureLoadBalancer, Internet). Required if source_address_prefixes is not used.
+    source_address_prefix                = optional(string)
+
+    # (Optional) List of source address prefixes (CIDR). Required if source_address_prefix is not used.
+    source_address_prefixes              = optional(list(string))
+
+    # (Optional) IDs of source Application Security Groups.
+    source_application_security_group_ids = optional(list(string))
+
+    # (Optional) Destination address prefix (CIDR or tag: VirtualNetwork, AzureLoadBalancer, Internet, Service Tags). Required if destination_address_prefixes is not used.
+    destination_address_prefix           = optional(string)
+
+    # (Optional) List of destination address prefixes (CIDR). Required if destination_address_prefix is not used.
+    destination_address_prefixes         = optional(list(string))
+
+    # (Optional) IDs of destination Application Security Groups.
+    destination_application_security_group_ids = optional(list(string))
+
+    # (Required) Defines whether to allow or deny traffic. Values: "Allow" or "Deny".
+    access                               = string
+
+    # (Required) Priority between 100 and 4096 (unique number; lower value means higher priority).
+    priority                             = number
+
+    # (Required) Traffic direction: "Inbound" or "Outbound".
+    direction                            = string
+  }))
+
+  validation {
+    condition = alltrue([
+      for rule in values(var.security_rules) : (
+        (
+          (rule.source_address_prefix   != null && rule.source_address_prefixes   == null) ||
+          (rule.source_address_prefix   == null && rule.source_address_prefixes   != null)
+        ) && (
+          (rule.source_port_range       != null && rule.source_port_ranges       == null) ||
+          (rule.source_port_range       == null && rule.source_port_ranges       != null)
+        ) && (
+          (rule.destination_address_prefix   != null && rule.destination_address_prefixes   == null) ||
+          (rule.destination_address_prefix   == null && rule.destination_address_prefixes   != null)
+        ) && (
+          (rule.destination_port_range   != null && rule.destination_port_ranges   == null) ||
+          (rule.destination_port_range   == null && rule.destination_port_ranges   != null)
+        )
+      )
+    ])
+    error_message = <<-EOT
+      Each rule must specify either:
+        - source_address_prefix <---> source_address_prefixes
+        - source_port_range <---> source_port_ranges
+        - destination_address_prefix <---> destination_address_prefixes
+        - destination_port_range <---> destination_port_ranges
+        Check if you're not leaving them empty or filling them both.
+      EOT
+  }
+
+  validation {
+    condition = alltrue([
+      for rule in values(var.security_rules) : contains([
+        "Tcp",
+        "Udp",
+        "Icmp",
+        "Esp",
+        "Ah",
+        "*"
+      ], rule.protocol)
+    ])
+    error_message = <<-EOT
+      protocol must be one of:
+      "Tcp", "Udp", "Icmp", "Esp", "Ah", "*"
+    EOT
+  }
+
+  # Validation: access must be "Allow" or "Deny"
+  validation {
+    condition = alltrue([
+      for rule in values(var.security_rules) : contains([
+        "Allow",
+        "Deny"
+      ], rule.access)
+    ])
+    error_message = <<-EOT
+      access must be one of:
+      "Allow", "Deny"
+      EOT
+  }
+
+  # Validation: priority must be between 100 and 4095
+  validation {
+    condition = alltrue([
+      for rule in values(var.security_rules) : (
+        rule.priority >= 100 && rule.priority <= 4095
+      )
+    ])
+    error_message = <<-EOT
+      priority must be a number between 100 and 4095 (inclusive).
+    EOT
+  }
+
+  # Validation: direction must be "Inbound" or "Outbound" (case insensitive)
+  validation {
+    condition = alltrue([
+      for rule in values(var.security_rules) : contains([
+        "inbound",
+        "outbound"
+      ], lower(rule.direction))
+    ])
+    error_message = <<-EOT
+      direction must be "Inbound" or "Outbound" (case insensitive).
+    EOT
+  }
+}

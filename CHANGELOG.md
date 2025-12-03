@@ -8,11 +8,12 @@ and this module adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.
 
 ## [2.0.1] - 2025-12-03
 
-Flag for creating a Public IP
+Flag for creating a Public IP and additional security rules
 
 ### Added
 
 Flag for creating a Public IP
+Variable "security_rules" to add additional security rules to the nsg
 
 ### Changed
 
