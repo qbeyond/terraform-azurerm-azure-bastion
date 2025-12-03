@@ -1,104 +1,127 @@
-# Azure Bastion NSG
 resource "azurerm_network_security_group" "bastion" {
-  name                = "nsg-${replace(replace(var.bastion_subnet_address, ".", "-"), "/", "-")}-Management-Bastion"
-  location            = var.location
-  resource_group_name = azurerm_subnet.bastion.resource_group_name
-  tags                = var.tags
-  ### Rules # Mandatory Rules for Azure Bastion - DO NOT CHANGE!!!
-  #### Inbound Rules #####
-  #https://docs.microsoft.com/en-us/azure/bastion/bastion-nsg
-  
+  name                = "nsg-vnet-10-200-2-128-25-bastion"
+  location            = local.default_location
+  resource_group_name = var.rg_bastion_name
+
   security_rule {
-    name                        = "Allow_Internet_to_BastionSubnet_Port443_Inbound"
-    priority                    = 120
-    direction                   = "Inbound"
-    access                      = "Allow"
-    protocol                    = "Tcp"
-    source_port_range           = "*"
-    destination_port_range      = "443"
-    source_address_prefix       = "Internet"
-    destination_address_prefix  = "*"
+    name                       = "Allow-HTTPS-From-Internet"
+    priority                   = 100
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "443"
+    source_address_prefix      = "Internet"
+    destination_address_prefix = "*"
   }
+
   security_rule {
-    name                        = "Allow_GatewayManager_to_BastionSubnet_Port443_Inbound"
+    name                       = "Allow-HTTPS-From-GatewayManager"
+    priority                   = 110
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "443"
+    source_address_prefix      = "GatewayManager"
+    destination_address_prefix = "*"
+  }
+
+  security_rule {
+    name                       = "Allow-HTTPS-From-AzureLoadBalancer"
+    priority                   = 120
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "443"
+    source_address_prefix      = "AzureLoadBalancer"
+    destination_address_prefix = "*"
+  }
+
+  security_rule {
+    name                        = "Allow-DataPlane-8080-5701-Inbound"
     priority                    = 130
     direction                   = "Inbound"
     access                      = "Allow"
     protocol                    = "Tcp"
     source_port_range           = "*"
-    destination_port_range      = "443"
-    source_address_prefix       = "GatewayManager"
-    destination_address_prefix  = "*"
+    destination_port_ranges     = ["8080", "5701"]
+    source_address_prefix       = "VirtualNetwork"
+    destination_address_prefix  = "VirtualNetwork"
   }
+
   security_rule {
-    name                        = "Allow_AzureLoadBalancer_to_BastionSubnet_Port443_Inbound"
+    name                        = "Allow-RDP-SSH-To-Jumphost"
     priority                    = 140
     direction                   = "Inbound"
     access                      = "Allow"
     protocol                    = "Tcp"
     source_port_range           = "*"
-    destination_port_range      = "443"
-    source_address_prefix       = "AzureLoadBalancer"
-    destination_address_prefix  = "*"
+    destination_port_ranges     = ["3389", "22"]
+    source_address_prefix       = "*"
+    destination_address_prefix  = "VirtualNetwork"
   }
 
   security_rule {
-    name                        = "Allow_VirtualNetwork_to_VirtualNetwork_BastionHostCommunication_Inbound"
-    priority                    = 150
-    direction                   = "Inbound"
-    access                      = "Allow"
-    protocol                    = "*"
-    source_port_range           = "*"
-    destination_port_ranges     = ["8080", "5701"]
-    source_address_prefix       = "VirtualNetwork"
-    destination_address_prefix  = "VirtualNetwork"
-  }
-  #### Outbound Rules #####
-  security_rule {
-    name                        = "Allow_BastionSubnet_to_VirtualNetwork_RDP_SSH_Outbound"
-    priority                    = 2020
+    name                        = "Allow-RDP-SSH-To-VNet"
+    priority                    = 200
     direction                   = "Outbound"
     access                      = "Allow"
-    protocol                    = "*"
+    protocol                    = "Tcp"
     source_port_range           = "*"
     destination_port_ranges     = ["3389", "22"]
     source_address_prefix       = "*"
     destination_address_prefix  = "VirtualNetwork"
   }
-  
+
   security_rule {
-    name                        = "Allow_BastionSubnet_to_AzureCloud_Port443_Outbound"
-    priority                    = 2030
+    name                        = "Allow-DataPlane-8080-5701-Outbound"
+    priority                    = 210
     direction                   = "Outbound"
     access                      = "Allow"
     protocol                    = "Tcp"
     source_port_range           = "*"
-    destination_port_ranges     = ["443"]
-    source_address_prefix       = "*"
-    destination_address_prefix  = "AzureCloud"
-  }
-
-  security_rule {
-    name                        = "Allow_VirtualNetwork_to_VirtualNetwork_BastionHostCommunication_Outbound"
-    priority                    = 2040
-    direction                   = "Outbound"
-    access                      = "Allow"
-    protocol                    = "*"
-    source_port_range           = "*"
-    destination_port_ranges     = ["8080", "5071"]
+    destination_port_ranges     = ["8080", "5701"]
     source_address_prefix       = "VirtualNetwork"
     destination_address_prefix  = "VirtualNetwork"
   }
 
   security_rule {
-    name                        = "Allow_BastionSubnet_to_Internet_Port80_Outbound"
-    priority                    = 2050
+    name                        = "Allow-HTTPS-To-AzureCloud"
+    priority                    = 220
     direction                   = "Outbound"
     access                      = "Allow"
-    protocol                    = "*"
+    protocol                    = "Tcp"
     source_port_range           = "*"
-    destination_port_ranges     = ["80"]
+    destination_port_range      = "443"
+    source_address_prefix       = "*"
+    destination_address_prefix  = "AzureCloud"
+  }
+
+  security_rule {
+    name                        = "Allow-HTTP-To-Internet"
+    priority                    = 230
+    direction                   = "Outbound"
+    access                      = "Allow"
+    protocol                    = "Tcp"
+    source_port_range           = "*"
+    destination_port_range      = "80"
     source_address_prefix       = "*"
     destination_address_prefix  = "Internet"
   }
+
+  security_rule {
+    name                       = var.bastion_subnet_id != null ? "Deny-${local.subnet_numeric}-to-${local.subnet_numeric}-Any-Inbound" : "Deny-${local.new_subnet_numeric}-to-${local.new_subnet_numeric}-Any-Inbound"
+    priority                   = 4096
+    direction                  = "Inbound"
+    access                     = "Deny"
+    protocol                   = "*"
+    source_port_range          = "*"
+    destination_port_range     = "*"
+    source_address_prefix      = var.bastion_subnet_id != null ? local.subnet_address : azurerm_subnet.bastion.address_prefixes[0]
+    destination_address_prefix = var.bastion_subnet_id != null ? local.subnet_address : azurerm_subnet.bastion.address_prefixes[0]
+  }
+
+  tags = local.tags
 }

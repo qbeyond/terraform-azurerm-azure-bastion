@@ -6,6 +6,26 @@ and this module adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.
  
 ## [Unreleased]
 
+## [2.0.0] - 2025-12-03
+
+Up-to-date and new functionalities
+
+### Added
+
+Variable bastion subnet id to allow existing subnets and not create new ones
+Several locals to ease the usage of the module
+
+### Changed
+
+Adjusted naming convention on all resources
+Nsg to match current bastion rules and a custom deny rule
+
+### Removed
+
+Deleted variable "shareable_link_enabled" as it is no longer used
+
+### Fixed
+
 ## [1.1.0] - 2024-04-19
 
 Tagging resources.
