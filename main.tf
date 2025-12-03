@@ -12,10 +12,13 @@ resource "azurerm_bastion_host" "this" {
   tunneling_enabled  = var.sku == "Standard" ? var.tunneling_enabled : null
   tags               = local.tags
 
-  ip_configuration {
-    name                 = "configuration"
-    subnet_id            = var.bastion_subnet_id != null ? var.bastion_subnet_id : azurerm_subnet.bastion.id
-    public_ip_address_id = azurerm_public_ip.bastion.id
+  dynamic "ip_configuration" {
+    for_each = var.create_pip ? [1] : []
+    content {
+      name                 = "configuration"
+      subnet_id            = var.bastion_subnet_id != null ? var.bastion_subnet_id : azurerm_subnet.bastion.id
+      public_ip_address_id = var.create_pip ? azurerm_public_ip.bastion.id : null
+    }
   }
 }
 
