@@ -109,17 +109,11 @@ variable "security_rules" {
     # (Optional) List of source address prefixes (CIDR). Required if source_address_prefix is not used.
     source_address_prefixes              = optional(list(string))
 
-    # (Optional) IDs of source Application Security Groups.
-    source_application_security_group_ids = optional(list(string))
-
     # (Optional) Destination address prefix (CIDR or tag: VirtualNetwork, AzureLoadBalancer, Internet, Service Tags). Required if destination_address_prefixes is not used.
     destination_address_prefix           = optional(string)
 
     # (Optional) List of destination address prefixes (CIDR). Required if destination_address_prefix is not used.
     destination_address_prefixes         = optional(list(string))
-
-    # (Optional) IDs of destination Application Security Groups.
-    destination_application_security_group_ids = optional(list(string))
 
     # (Required) Defines whether to allow or deny traffic. Values: "Allow" or "Deny".
     access                               = string
