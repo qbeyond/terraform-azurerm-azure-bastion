@@ -3,11 +3,6 @@ variable "location" {
   type        = string
 }
 
-variable "state" {
-  description = "The environment of the resource. (prd,dev,tst,int)"
-  type        = string
-}
-
 variable "rg_bastion_name" {
   description = "Azure Bastion Resource Group Name"
   type        = string
@@ -18,13 +13,13 @@ variable "rg_connectivity_name" {
   type        = string
 }
 
-variable "bastion_vnet_name" {
-  description = "Azure Bastion VNET name"
+variable "bastion_subnet_address" {
+  description = "Address of the new Azure Bastion Subnet"
   type        = string
 }
 
-variable "bastion_subnet_address" {
-  description = "Azure Bastion Subnet address, minimum possible address is /26"
+variable "bastion_vnet_name" {
+  description = "Existing Azure Bastion VNET name"
   type        = string
 }
 
@@ -68,14 +63,14 @@ variable "tunneling_enabled" {
   default     = null
 }
 
-variable "shareable_link_enabled" {
-  description = "Option in PREVIEW!!! Allow users connect to a target resource using Azure Bastion without accessing the Azure portal, only available in the Standard tier"
-  type        = bool
-  default     = null
-}
-
 variable "tags" {
   type        = map(string)
   description = "If specified, will set tags for all resources deployed by this module where supported."
+  default     = null
+}
+
+variable "bastion_subnet_id" {
+  description = "The ID of an existing subnet to use for the Azure Bastion Host. If not provided, a new subnet will be created."
+  type        = string
   default     = null
 }
