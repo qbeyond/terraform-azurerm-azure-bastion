@@ -14,6 +14,7 @@ Flag for creating a Public IP and additional security rules
 
 Flag for creating a Public IP
 Variable "security_rules" to add additional security rules to the nsg
+Capability to override default Bastion rules
 
 ### Changed
 
