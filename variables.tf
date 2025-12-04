@@ -63,6 +63,12 @@ variable "tunneling_enabled" {
   default     = null
 }
 
+variable "kerberos_enabled" {
+  description = "Enable Kerberos authentication for Bastion Host, only available in the Standard tier"
+  type        = bool
+  default     = null
+}
+
 variable "tags" {
   type        = map(string)
   description = "If specified, will set tags for all resources deployed by this module where supported."
