@@ -10,6 +10,7 @@ resource "azurerm_bastion_host" "this" {
   ip_connect_enabled = var.sku == "Standard" ? var.ip_connect_enabled : null
   file_copy_enabled  = var.sku == "Standard" ? var.file_copy_enabled : null
   tunneling_enabled  = var.sku == "Standard" ? var.tunneling_enabled : null
+  kerberos_enabled   = var.sku == "Standard" ? var.kerberos_enabled : null
   tags               = local.tags
 
   dynamic "ip_configuration" {

@@ -6,6 +6,21 @@ and this module adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.
  
 ## [Unreleased]
 
+## [2.0.2] - 2025-12-04
+
+Variable to add kerberos
+
+### Added
+
+Variable to add kerberos
+
+### Changed
+
+### Removed
+
+### Fixed
+
+
 ## [2.0.1] - 2025-12-03
 
 Flag for creating a Public IP and additional security rules
