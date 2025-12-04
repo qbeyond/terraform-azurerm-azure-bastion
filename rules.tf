@@ -34,8 +34,8 @@ resource "azurerm_network_security_group" "bastion" {
     protocol                   = "*"
     source_port_range          = "*"
     destination_port_range     = "*"
-    source_address_prefix      = var.bastion_subnet_id != null ? local.subnet_address : azurerm_subnet.bastion[0].address_prefixes[0]
-    destination_address_prefix = var.bastion_subnet_id != null ? local.subnet_address : azurerm_subnet.bastion[0].address_prefixes[0]
+    source_address_prefix      = var.use_existing_subnet ? local.subnet_address : azurerm_subnet.bastion[0].address_prefixes[0]
+    destination_address_prefix = var.use_existing_subnet ? local.subnet_address : azurerm_subnet.bastion[0].address_prefixes[0]
   }
 
   tags = local.tags

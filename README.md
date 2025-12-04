@@ -72,6 +72,7 @@ module "azureBastion" {
 | <a name="input_sku"></a> [sku](#input\_sku) | Bastion Tiers. (Basic, Standard) | `string` | `"Basic"` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | If specified, will set tags for all resources deployed by this module where supported. | `map(string)` | `null` | no |
 | <a name="input_tunneling_enabled"></a> [tunneling\_enabled](#input\_tunneling\_enabled) | The 'native client feature' <Name in Azure Portal, in Terraform is 'tunneling\_enabled'> lets you connect to your target VMs via Bastion using Azure CLI, only available in the Standard tier | `bool` | `null` | no |
+| <a name="input_use_existing_subnet"></a> [use\_existing\_subnet](#input\_use\_existing\_subnet) | If true, use an existing subnet provided in bastion\_subnet\_id; if false, create the AzureBastionSubnet. | `bool` | `false` | no |
 ## Outputs
 
 | Name | Description |

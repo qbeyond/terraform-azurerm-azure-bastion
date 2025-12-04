@@ -14,11 +14,11 @@ resource "azurerm_bastion_host" "this" {
   tags               = local.tags
 
   dynamic "ip_configuration" {
-    for_each = var.create_pip ? [1] : []
-    content {
-      name                 = "configuration"
-      subnet_id            = var.bastion_subnet_id != null ? var.bastion_subnet_id : azurerm_subnet.bastion[0].id
-      public_ip_address_id = var.create_pip ? azurerm_public_ip.bastion[0].id : null
+  for_each = var.create_pip ? [1] : []
+  content {
+    name                 = "configuration"
+    subnet_id            = var.use_existing_subnet ? var.bastion_subnet_id : azurerm_subnet.bastion[0].id
+    public_ip_address_id = var.create_pip ? azurerm_public_ip.bastion[0].id : null
     }
   }
 }
@@ -38,7 +38,7 @@ resource "azurerm_public_ip" "bastion" {
 
 # Azure Bastion Subnet
 resource "azurerm_subnet" "bastion" {
-  count                = var.bastion_subnet_id == null ? 1 : 0
+  count                = var.use_existing_subnet ? 0 : 1
   name                 = "AzureBastionSubnet" # Mandatory name - DO NOT CHANGE!!!
   resource_group_name  = var.rg_connectivity_name
   virtual_network_name = local.vnet_name
@@ -48,6 +48,6 @@ resource "azurerm_subnet" "bastion" {
 ### Associate 
 # NSG association not possible for GatewaySubnet
 resource "azurerm_subnet_network_security_group_association" "bastion" {
-  subnet_id                 = var.bastion_subnet_id != null ? var.bastion_subnet_id : azurerm_subnet.bastion[0].id
+  subnet_id                 = var.use_existing_subnet ? var.bastion_subnet_id : azurerm_subnet.bastion[0].id
   network_security_group_id = azurerm_network_security_group.bastion.id
 }
