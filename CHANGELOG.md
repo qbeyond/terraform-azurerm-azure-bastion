@@ -8,13 +8,13 @@ and this module adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.
 
 ## [2.0.4] - 2025-12-04
 
-Downgraded azurerm version
+azurerm to variable
 
 ### Added
 
 ### Changed
 
-Changed azurerm version
+Changed azurerm version to variable
 
 ### Removed
 
