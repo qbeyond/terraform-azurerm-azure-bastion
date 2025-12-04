@@ -10,19 +10,19 @@ variable "rg_bastion_name" {
 
 variable "rg_connectivity_name" {
   description = "Resource Group name where Azure Bastion VNet and Subnet are located"
-  type        = optional(string)
+  type        = string
   default     = null
 }
 
 variable "bastion_subnet_address" {
   description = "Address of the new Azure Bastion Subnet"
-  type        = optional(string)
+  type        = string
   default     = null
 }
 
 variable "bastion_vnet_name" {
   description = "Existing Azure Bastion VNET name"
-  type        = optional(string)
+  type        = string
   default     = null
 }
 
@@ -92,7 +92,7 @@ variable "create_pip" {
 
 variable "security_rules" {
   description = "Each of the security rules assigned to the NSG."
-  type = optional(map(object({
+  type = map(object({
 
     # (Optional) Description of the rule (up to 140 characters).
     description                          = optional(string)
@@ -132,10 +132,10 @@ variable "security_rules" {
 
     # (Required) Traffic direction: "Inbound" or "Outbound".
     direction                            = string
-  })))
+  }))
 
   validation {
-    condition = alltrue([
+    condition = var.security_rules == null ? true : alltrue([
       for rule in values(var.security_rules) : (
         (
           (rule.source_address_prefix   != null && rule.source_address_prefixes   == null) ||
@@ -163,7 +163,7 @@ variable "security_rules" {
   }
 
   validation {
-    condition = alltrue([
+    condition = var.security_rules == null ? true : alltrue([
       for rule in values(var.security_rules) : contains([
         "Tcp",
         "Udp",
@@ -181,7 +181,7 @@ variable "security_rules" {
 
   # Validation: access must be "Allow" or "Deny"
   validation {
-    condition = alltrue([
+    condition = var.security_rules == null ? true : alltrue([
       for rule in values(var.security_rules) : contains([
         "Allow",
         "Deny"
@@ -195,7 +195,7 @@ variable "security_rules" {
 
   # Validation: priority must be between 100 and 4095
   validation {
-    condition = alltrue([
+    condition = var.security_rules == null ? true : alltrue([
       for rule in values(var.security_rules) : (
         rule.priority >= 100 && rule.priority <= 4095
       )
@@ -207,7 +207,7 @@ variable "security_rules" {
 
   # Validation: direction must be "Inbound" or "Outbound" (case insensitive)
   validation {
-    condition = alltrue([
+    condition = var.security_rules == null ? true : alltrue([
       for rule in values(var.security_rules) : contains([
         "inbound",
         "outbound"
@@ -217,4 +217,6 @@ variable "security_rules" {
       direction must be "Inbound" or "Outbound" (case insensitive).
     EOT
   }
+
+  default = null
 }

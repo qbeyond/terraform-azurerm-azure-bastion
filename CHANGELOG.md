@@ -6,6 +6,21 @@ and this module adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.
  
 ## [Unreleased]
 
+## [2.1.0] - 2025-12-04
+
+Multiple changes
+
+### Added
+
+Locals to ease the workflow of the module
+Validations
+
+### Changed
+
+### Removed
+
+### Fixed
+
 ## [2.0.7] - 2025-12-04
 
 Deleted azurerm variable
@@ -19,7 +34,6 @@ Deleted azurerm variable
 azurerm variable
 
 ### Fixed
-
 
 ## [2.0.6] - 2025-12-04
 
