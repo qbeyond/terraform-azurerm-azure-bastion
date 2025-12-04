@@ -10,19 +10,19 @@ variable "rg_bastion_name" {
 
 variable "rg_connectivity_name" {
   description = "Resource Group name where Azure Bastion VNet and Subnet are located"
-  type        = string
+  type        = optional(string)
   default     = null
 }
 
 variable "bastion_subnet_address" {
   description = "Address of the new Azure Bastion Subnet"
-  type        = string
+  type        = optional(string)
   default     = null
 }
 
 variable "bastion_vnet_name" {
   description = "Existing Azure Bastion VNET name"
-  type        = string
+  type        = optional(string)
   default     = null
 }
 
@@ -98,7 +98,7 @@ variable "azurerm_version" {
 
 variable "security_rules" {
   description = "Each of the security rules assigned to the NSG."
-  type = map(object({
+  type = optional(map(object({
 
     # (Optional) Description of the rule (up to 140 characters).
     description                          = optional(string)
@@ -138,7 +138,7 @@ variable "security_rules" {
 
     # (Required) Traffic direction: "Inbound" or "Outbound".
     direction                            = string
-  }))
+  })))
 
   validation {
     condition = alltrue([
