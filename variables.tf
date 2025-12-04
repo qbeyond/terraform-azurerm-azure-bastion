@@ -90,12 +90,6 @@ variable "create_pip" {
   default     = true
 }
 
-variable "azurerm_version" {
-  description = "Version of the azurerm provider to use."
-  type        = string
-  default     = "~> 3.117.1"
-}
-
 variable "security_rules" {
   description = "Each of the security rules assigned to the NSG."
   type = optional(map(object({
