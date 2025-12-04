@@ -11,16 +11,19 @@ variable "rg_bastion_name" {
 variable "rg_connectivity_name" {
   description = "Resource Group name where Azure Bastion VNet and Subnet are located"
   type        = string
+  default     = null
 }
 
 variable "bastion_subnet_address" {
   description = "Address of the new Azure Bastion Subnet"
   type        = string
+  default     = null
 }
 
 variable "bastion_vnet_name" {
   description = "Existing Azure Bastion VNET name"
   type        = string
+  default     = null
 }
 
 variable "copy_paste_enabled" {
