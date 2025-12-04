@@ -32,6 +32,12 @@ variable "copy_paste_enabled" {
   default     = null
 }
 
+variable "use_existing_subnet" {
+  description = "If true, use an existing subnet provided in bastion_subnet_id; if false, create the AzureBastionSubnet."
+  type        = bool
+  default     = false
+}
+
 ### SKU ###
 
 variable "sku" {
