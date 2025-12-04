@@ -27,15 +27,15 @@ resource "azurerm_network_security_group" "bastion" {
   }
 
   security_rule {
-    name                       = var.bastion_subnet_id != null ? "Deny-${local.subnet_numeric}-to-${local.subnet_numeric}-Any-Inbound" : "Deny-${local.new_subnet_numeric}-to-${local.new_subnet_numeric}-Any-Inbound"
+    name                       = var.bastion_subnet_id != null ? "Deny-${local.safe_subnet_numeric}-to-${local.safe_subnet_numeric}-Any-Inbound" : "Deny-${local.safe_new_subnet_numeric}-to-${local.safe_new_subnet_numeric}-Any-Inbound"
     priority                   = 4096
     direction                  = "Inbound"
     access                     = "Deny"
     protocol                   = "*"
     source_port_range          = "*"
     destination_port_range     = "*"
-    source_address_prefix      = var.bastion_subnet_id != null ? local.subnet_address : azurerm_subnet.bastion.address_prefixes[0]
-    destination_address_prefix = var.bastion_subnet_id != null ? local.subnet_address : azurerm_subnet.bastion.address_prefixes[0]
+    source_address_prefix      = var.bastion_subnet_id != null ? local.subnet_address : azurerm_subnet.bastion[0].address_prefixes[0]
+    destination_address_prefix = var.bastion_subnet_id != null ? local.subnet_address : azurerm_subnet.bastion[0].address_prefixes[0]
   }
 
   tags = local.tags
