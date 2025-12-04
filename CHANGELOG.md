@@ -6,6 +6,20 @@ and this module adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.
  
 ## [Unreleased]
 
+## [2.0.4] - 2025-12-04
+
+azurerm to variable
+
+### Added
+
+### Changed
+
+Changed azurerm version to variable
+
+### Removed
+
+### Fixed
+
 ## [2.0.3] - 2025-12-04
 
 Downgraded azurerm version
