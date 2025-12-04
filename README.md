@@ -67,6 +67,7 @@ module "azureBastion" {
 | <a name="input_create_pip"></a> [create\_pip](#input\_create\_pip) | Whether to create a new Public IP for the Azure Bastion Host. If true, a new Public IP will be created. | `bool` | `true` | no |
 | <a name="input_file_copy_enabled"></a> [file\_copy\_enabled](#input\_file\_copy\_enabled) | Allows you to transfer files via Azure Bastion, only available in the Standard tier | `bool` | `null` | no |
 | <a name="input_ip_connect_enabled"></a> [ip\_connect\_enabled](#input\_ip\_connect\_enabled) | Azure Bastion connectivity via IP, only available in the Standard tier | `bool` | `true` | no |
+| <a name="input_kerberos_enabled"></a> [kerberos\_enabled](#input\_kerberos\_enabled) | Enable Kerberos authentication for Bastion Host, only available in the Standard tier | `bool` | `null` | no |
 | <a name="input_scale_units"></a> [scale\_units](#input\_scale\_units) | Allows scale the number of 'backend instances/VMs' between 2-50 (default 2), <each unit/instance/VM allows 20 sessions>, by default is 2 (40 sessions) on Basic and Standard tier, but it can only be modified in the Standard tier | `number` | `null` | no |
 | <a name="input_sku"></a> [sku](#input\_sku) | Bastion Tiers. (Basic, Standard) | `string` | `"Basic"` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | If specified, will set tags for all resources deployed by this module where supported. | `map(string)` | `null` | no |
