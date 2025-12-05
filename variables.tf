@@ -96,6 +96,12 @@ variable "create_pip" {
   default     = true
 }
 
+variable "nsg_id" {
+  description = "The ID of an existing Network Security Group to associate with the Azure Bastion Subnet. If not provided, a new NSG will be created."
+  type        = string
+  default     = null
+}
+
 variable "security_rules" {
   description = "Each of the security rules assigned to the NSG."
   type = map(object({

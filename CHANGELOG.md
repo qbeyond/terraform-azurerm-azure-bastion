@@ -8,6 +8,20 @@ and this module adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.
 
 ## [2.2.0] - 2025-12-04
 
+New variable to control creation of nsg
+
+### Added
+
+nsg_id variable to allow association with existing subnet
+
+### Changed
+
+### Removed
+
+### Fixed
+
+## [2.2.0] - 2025-12-04
+
 New variable to control creation of resources
 
 ### Added

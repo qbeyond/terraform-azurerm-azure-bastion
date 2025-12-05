@@ -49,5 +49,5 @@ resource "azurerm_subnet" "bastion" {
 # NSG association not possible for GatewaySubnet
 resource "azurerm_subnet_network_security_group_association" "bastion" {
   subnet_id                 = var.use_existing_subnet ? var.bastion_subnet_id : azurerm_subnet.bastion[0].id
-  network_security_group_id = azurerm_network_security_group.bastion.id
+  network_security_group_id = var.nsg_id != null ? var.nsg_id : azurerm_network_security_group.bastion[0].id
 }
