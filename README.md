@@ -56,6 +56,7 @@ module "azureBastion" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_azurerm_bastion_name"></a> [azurerm\_bastion\_name](#input\_azurerm\_bastion\_name) | Azure Bastion Name | `string` | n/a | yes |
 | <a name="input_location"></a> [location](#input\_location) | The region of a resource. | `string` | n/a | yes |
 | <a name="input_rg_bastion_name"></a> [rg\_bastion\_name](#input\_rg\_bastion\_name) | Azure Bastion Resource Group Name | `string` | n/a | yes |
 | <a name="input_bastion_subnet_address"></a> [bastion\_subnet\_address](#input\_bastion\_subnet\_address) | Address of the new Azure Bastion Subnet | `string` | `null` | no |
@@ -73,6 +74,7 @@ module "azureBastion" {
 | <a name="input_sku"></a> [sku](#input\_sku) | Bastion Tiers. (Basic, Standard) | `string` | `"Basic"` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | If specified, will set tags for all resources deployed by this module where supported. | `map(string)` | `null` | no |
 | <a name="input_tunneling_enabled"></a> [tunneling\_enabled](#input\_tunneling\_enabled) | The 'native client feature' <Name in Azure Portal, in Terraform is 'tunneling\_enabled'> lets you connect to your target VMs via Bastion using Azure CLI, only available in the Standard tier | `bool` | `null` | no |
+| <a name="input_use_existing_nsg"></a> [use\_existing\_nsg](#input\_use\_existing\_nsg) | If true, use an existing nsg associated to the associated subnet; if false, create the AzureBastionSubnet NSG. | `bool` | `false` | no |
 | <a name="input_use_existing_subnet"></a> [use\_existing\_subnet](#input\_use\_existing\_subnet) | If true, use an existing subnet provided in bastion\_subnet\_id; if false, create the AzureBastionSubnet. | `bool` | `false` | no |
 ## Outputs
 
