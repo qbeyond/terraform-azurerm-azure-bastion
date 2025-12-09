@@ -6,7 +6,22 @@ and this module adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.
  
 ## [Unreleased]
 
-## [2.2.0] - 2025-12-04
+## [2.4.0] - 2025-12-08
+
+New variable to control creation of nsg
+
+### Added
+
+use_existing_nsg variable to control creation of new nsg
+azurerm_bastion_name to directly name the bastion host and avoid re-creations
+
+### Changed
+
+### Removed
+
+### Fixed
+
+## [2.3.0] - 2025-12-04
 
 New variable to control creation of nsg
 

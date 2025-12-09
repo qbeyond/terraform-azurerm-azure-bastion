@@ -8,6 +8,11 @@ variable "rg_bastion_name" {
   type        = string
 }
 
+variable "azurerm_bastion_name" {
+  description = "Azure Bastion Name"
+  type        = string
+}
+
 variable "rg_connectivity_name" {
   description = "Resource Group name where Azure Bastion VNet and Subnet are located"
   type        = string
@@ -34,6 +39,12 @@ variable "copy_paste_enabled" {
 
 variable "use_existing_subnet" {
   description = "If true, use an existing subnet provided in bastion_subnet_id; if false, create the AzureBastionSubnet."
+  type        = bool
+  default     = false
+}
+
+variable "use_existing_nsg" {
+  description = "If true, use an existing nsg associated to the associated subnet; if false, create the AzureBastionSubnet NSG."
   type        = bool
   default     = false
 }
