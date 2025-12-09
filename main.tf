@@ -1,5 +1,5 @@
 resource "azurerm_bastion_host" "this" {
-  name                = var.bastion_subnet_id != null ? "bn-${local.vnet_name}" : "bn-${var.bastion_vnet_name}"
+  name                = var.azurerm_bastion_name
   location            = local.default_location
   resource_group_name = var.rg_bastion_name
   sku                 = var.sku
@@ -20,6 +20,10 @@ resource "azurerm_bastion_host" "this" {
     subnet_id            = var.use_existing_subnet ? var.bastion_subnet_id : azurerm_subnet.bastion[0].id
     public_ip_address_id = var.create_pip ? azurerm_public_ip.bastion[0].id : null
     }
+  }
+
+  lifecycle {
+    ignore_changes = [ ip_configuration ]
   }
 }
 
@@ -48,6 +52,7 @@ resource "azurerm_subnet" "bastion" {
 ### Associate 
 # NSG association not possible for GatewaySubnet
 resource "azurerm_subnet_network_security_group_association" "bastion" {
+  count                     = var.use_existing_nsg ? 0 : 1
   subnet_id                 = var.use_existing_subnet ? var.bastion_subnet_id : azurerm_subnet.bastion[0].id
   network_security_group_id = var.nsg_id != null ? var.nsg_id : azurerm_network_security_group.bastion[0].id
 }

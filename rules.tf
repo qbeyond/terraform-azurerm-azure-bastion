@@ -1,5 +1,5 @@
 resource "azurerm_network_security_group" "bastion" {
-  count = var.nsg_id != null ? 0 : 1
+  count               = var.use_existing_nsg ? 0 : 1
   name                = "nsg-${local.vnet_name}"
   location            = local.default_location
   resource_group_name = var.rg_bastion_name
